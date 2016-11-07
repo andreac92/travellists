@@ -1,0 +1,65 @@
+/* VARIABLES */
+$main-font: Helvetica, sans-serif;
+$main-color: #008dd5;
+$secondary-color: #373f51;
+$link-color: #e43f6f;
+$dark-color: #333;
+
+
+html,
+body,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  font-family: $main-font;
+}
+
+/* HEADERS */
+h1 {
+	color: $main-color;
+}
+
+h2, h3 {
+	color: $secondary-color;
+}
+
+/* LINKS */
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	color: $dark-color;
+}
+
+#placelists div {
+  width: 75%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#left, #right{
+	float: left;
+}
+
+#left {
+	width: 30%;
+	max-width: 300px;
+	input[type="text"] {
+	  width: 80%;
+	  min-width: inherit;
+	}
+}
+
+#right {
+	width: 70%;
+	max-width: 500px;
+}
+
+/* MAPS */
+#map {
+	height: 400px;
+	width: 100%;
+}
