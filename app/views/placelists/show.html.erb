@@ -10,7 +10,7 @@
 
   <div id="list">
     <% @places.each do |place| %>
-        <p><%= place.visited %> <%= place.name %> <%= link_to 'Delete', place_path(place), method: :delete %></p>
+        <div class="<%= place.name %>"><span class="hiddenCoords"><%= place.coords =%></span><%= place.visited %> <%= place.name %> <%= link_to 'Delete', place_path(place), method: :delete %></div>
     <% end %>
   </div>
 
@@ -24,7 +24,7 @@
       <%= f.label :description %><br>
       <%= f.text_area :description %>
     </p>
-    <%= hidden_field_tag(:coords, "") %>
+    <%= f.text_area :coords %>
     <p>
       <%= f.submit %>
     </p>
