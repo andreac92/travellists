@@ -1,8 +1,7 @@
 <div id="left">
-  <p>
-    <strong>Placelist:</strong>
-    <%= @placelist.title %>
-  </p>
+  <div id="placelist_title">
+    <h2><%= @placelist.title %></h2>
+  </div>
    
   <p>
     <%= @placelist.description %>
@@ -10,7 +9,7 @@
 
   <div id="list">
     <% @places.each do |place| %>
-        <div class="<%= place.name %>"><span class="hiddenCoords"><%= place.coords =%></span><%= place.visited %> <%= place.name %> <%= link_to 'Delete', place_path(place), method: :delete %></div>
+         <div class="<%= place.name %>"><span class="hiddenCoords"><%= place.coords =%></span><span class="place_visited"><%= place.visited %></span> <%= place.name %> <%= link_to 'Delete', placelist_place_path(@placelist, place), class: "deletePlace" %></div>
     <% end %>
   </div>
 
@@ -25,7 +24,7 @@
       <%= f.text_area :description %>
     </p>
     <%= f.text_area :coords %>
-    <p>
+    <p id="submit">
       <%= f.submit %>
     </p>
   <% end %>

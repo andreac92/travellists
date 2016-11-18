@@ -34,15 +34,21 @@ class PlacesController < ApplicationController
 		# 	render 'new'
 		# end
 		@placelist = Placelist.find(params[:placelist_id])
-    	@place = @placelist.places.create(place_params)
-    	redirect_to @placelist
+    	@place = @placelist.places.new(place_params)
+    	#redirect_to @placelist
+    	if @place.save
+    		render json: @place
+    	else
+			render plain: "NOTOK"
+		end
 	end
 
 	def destroy
 		@place = Place.find(params[:id])
+		@rtn = {:id => @place.id, :name => @place.name}
 		@place.destroy
 
-		redirect_to placelists_path
+		render json: @rtn
 	end
 
 	def toggle_visited
