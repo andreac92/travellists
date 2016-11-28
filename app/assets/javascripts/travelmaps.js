@@ -94,32 +94,52 @@ var travelMaps = (function () {
       });
     });
 
-    $(".deletePlace").click(function(e) {
-      e.preventDefault();
-      console.log("delete clicked!!");
+    $(".deletePlace").click(addDeleteListener);
+
+    $(".place_visited").click(function(){
+      console.log("clicked");
+      var id = $(this).attr('id');
+      console.log("id: "+id);
+      var el = $(this);
       $.ajax({
-        type: "DELETE",
-        url: $(this).attr('href'),
-        data: "",
+        type: "POST",
+        url: "/places/" + id + "/visit",
+        data: {},
         success: function (data) {
-          if (data) {
-            console.log("deleted!!");
-            deletePlaceFromList(data);
+          if (data == "NOTOK") {
+            console.log("it didnt work!!");
           } else {
-            console.log("wat");
+            console.log("it worked!!!"+data);
+            toggleSeen(el.children('.visitedStatus'));
+            
           }
         }
       });
-    })
+    });
+  }
+
+  var toggleSeen = function(status) {
+    status.toggleClass("seen");
+    statusTXT = status.children('span');
+    if (statusTXT.text() == "Seen") {
+      statusTXT.text("Unseen");
+    } else {
+      statusTXT.text("Seen");
+    }
   }
 
   var deletePlaceFromList = function(place) {
     $('.'+place.name).remove();
-    
+    //var place = JSON.parse(place);
+    var marker = addedPlaces[place.name].marker;
+    console.log(marker);
+    marker.setMap(null);
+    delete addedPlaces[place.name];
   }
 
   var addPlacetoList = function (place) {
     $("#list").append(renderPlaceDiv(place));
+    $("#list div:last .deletePlace").click(addDeleteListener);
     var coords = JSON.parse(place.coords);
     coords.lat = Number(coords.lat);
     coords.lng = Number(coords.lng);
@@ -128,7 +148,26 @@ var travelMaps = (function () {
   }
 
   var renderPlaceDiv = function (place) {
-    return '<div class="'+place.name+'"><span class="hiddenCoords">'+place.coords+'</span><span class="place_visited">'+place.visited+'</span> '+place.name+' <a href="/places/'+place.id+'">Delete</a></div>';
+    return '<div class="'+place.name+'"><span class="hiddenCoords">'+place.coords+'</span><span class="place_visited">'+place.visited+'</span> '+place.name+' <a href="'+window.location.href+'/places/'+place.id+'" class="deletePlace">Delete</a></div>';
+  }
+
+  var addDeleteListener = function(e) {
+      e.preventDefault();
+      console.log("delete clicked!!");
+      $.ajax({
+        type: "DELETE",
+        url: $(this).attr('href'),
+        data: "",
+        success: function (data) {
+          if (data) {
+            console.log(data);
+            console.log("deleted!!");
+            deletePlaceFromList(data);
+          } else {
+            console.log("wat");
+          }
+        }
+      });
   }
 
 

@@ -1,6 +1,7 @@
 class PlacelistsController < ApplicationController
 	def index
 		@placelists = Placelist.all
+		@placelist = Placelist.new
 	end
 
 	def show
@@ -16,9 +17,10 @@ class PlacelistsController < ApplicationController
 		@placelist = Placelist.new(placelist_params)
 
 		if @placelist.save
+			# render json: @placelist
 			redirect_to @placelist
 		else
-			render 'new'
+			render plain: "NOTOK"
 		end
 	end
 
@@ -39,7 +41,7 @@ class PlacelistsController < ApplicationController
 		@placelist = Placelist.find(params[:id])
 		@placelist.destroy
 
-		redirect_to placelists_path
+		render plain: "OK"
 	end
 
 	private

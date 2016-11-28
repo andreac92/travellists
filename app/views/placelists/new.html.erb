@@ -1,5 +1,5 @@
 <h1>Create a new PlaceList</h1>
-
+<% puts @placelist.to_json %>
 <%= form_for :placelist, url: placelists_path do |f| %>
   <p>
     <%= f.label :title %><br>

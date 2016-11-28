@@ -20,8 +20,12 @@ h1 {
 	color: $main-color;
 }
 
-h2, h3 {
+h2 {
 	color: $secondary-color;
+}
+
+h3 {
+	color: $link-color;
 }
 
 /* LINKS */
@@ -34,29 +38,6 @@ a:hover {
 	color: $dark-color;
 }
 
-#placelists div {
-  width: 75%;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-#left, #right{
-	float: left;
-}
-
-#left {
-	width: 30%;
-	max-width: 400px;
-	input[type="text"] {
-	  width: 80%;
-	  min-width: inherit;
-	}
-}
-
-#right {
-	width: 70%;
-	max-width: 800px;
-}
 
 .hiddenCoords {
 	display: none;
@@ -70,4 +51,55 @@ a:hover {
 #map {
 	height: 400px;
 	width: 100%;
+}
+
+@media (min-width: 768px) {
+.navbar {
+	border-radius: 0px;
+}
+}
+
+#placelist_form, .list-wrapper {
+	padding: 10px;
+}
+
+.visitedStatus {
+  background-color: #888;
+}
+
+.place_visited {
+	&:hover {
+		cursor: pointer;
+		.visitedStatus {
+			background-color: #5cb85c;
+			span {
+				display: none;
+			}
+			&:after {
+				content: 'VISIT';
+				display: inline-block;
+				width: 50px;
+			}
+		}
+		.visitedStatus.seen {
+			background-color: #d9534f;
+			span {
+				display: none;
+			}
+			&:after {
+				content: 'UNVISIT';
+				display: inline-block;
+				width: 50px;
+			}
+		}
+	}
+	.visitedStatus span {
+		position: relative;
+		display: inline-block;
+		width: 50px;
+	}
+}
+
+.seen {
+	background-color: #5cb85c;
 }

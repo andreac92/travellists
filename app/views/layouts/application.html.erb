@@ -9,12 +9,13 @@
   </head>
 
   <body>
-    <div id="appcontain">
+    <%= render "shared/nav" %>
+    <%= yield :pageTitle %>
+    <div id="appcontain container">
     <%= yield %>
   </div>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJB_lUYjfjoUK7nXENxrJFz7FsjU8CSvc&libraries=places&callback=travelMaps.init">
-    </script>
+
+  <%= yield :extra %>
     
   </body>
 </html>

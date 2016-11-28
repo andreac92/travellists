@@ -54,8 +54,11 @@ class PlacesController < ApplicationController
 	def toggle_visited
 		@place = Place.find(params[:id])
 		@place.visited = !@place.visited;
-		@place.save
-		redirect_to @place
+		if @place.save
+			render plain: "OK"
+		else
+			render plain: "NOTOK"
+		end
 	end
 
 	private

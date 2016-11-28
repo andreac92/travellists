@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   	resources :places
   end
 
-  get '/places/:id/toggle_visited', to: 'places#toggle_visited'
+  post '/places/:id/visit', to: 'places#toggle_visited'
 
 
   root 'welcome#index'
