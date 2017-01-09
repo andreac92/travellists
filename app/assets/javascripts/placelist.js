@@ -20,7 +20,7 @@ $(window).load(function(){
 		 //        }
 		 //      });
 			// });
-    		$("a.deleteList").click(function(e) {
+    		$("#placelistList").on("click", "a.deleteList", function(e) {
     			e.preventDefault();
     			var element = $(this).closest("div.panel");
     			$.ajax({
@@ -35,6 +35,39 @@ $(window).load(function(){
 			          }
 			        }
 			    });
+    		})
+    		.on("click", ".editPlaceList", function(e){
+    			var panel = $(this).closest('div.panel');
+    			var newText = $(this).text() == "Edit" ? "Save" : "Edit";
+    			var title = $(this).siblings('.placeListTitle');
+    			var body = panel.children('.panel-body');
+
+    			var id = (title.attr('href')).split('/').splice(-1);
+    			if (newText == "Edit") {
+    				console.log("sending edits");
+    				title.attr("contenteditable", "false");
+    				body.attr("contenteditable", "false");
+    				$.ajax({
+				        type: "PATCH",
+				        url: title.attr('href'),
+				        data: {"id": id, "placelist": {"title": title.text(), "description": body.text()}},
+				        success: function (data) {
+				          if (data == "NOTOK") {
+				            console.log("it didnt work!!");
+				          } else {
+				            console.log("it worked!!!"+data);
+				          }
+				        }
+			    	});
+    			} else {
+    				title.attr("contenteditable", "true");
+    				body.attr("contenteditable", "true");
+    			}
+    			$(this).text(newText);
+    			panel.toggleClass('editable');
+    		})
+    		.on("click", ".editable a.placeListTitle", function(e){
+    			e.preventDefault();
     		});
 		}
 

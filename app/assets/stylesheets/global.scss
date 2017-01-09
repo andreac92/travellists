@@ -103,3 +103,31 @@ a:hover {
 .seen {
 	background-color: #5cb85c;
 }
+.editPlaceList {
+	cursor: pointer;
+	&:hover {
+		background-color: #286090;
+	}
+}
+.panel.editable {
+	.deleteList {
+		display: none;
+	}
+	.placeListTitle {
+	    color: #337ab7;
+	    background-color: #ffffff;
+	    padding: 5px 10px;
+	    border-radius: 1px;
+        display: block;
+        cursor: text;
+        text-decoration: none;
+        &:hover, &:visited, &:active {
+        	text-decoration: none;
+        }
+	}
+	.panel-body {
+		color: #337ab7;
+		cursor: text;
+	}
+}
+

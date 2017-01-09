@@ -31,9 +31,9 @@ class PlacelistsController < ApplicationController
 	def update
 		@placelist = Placelist.find(params[:id])
 		if @placelist.update(placelist_params)
-			redirect_to @placelist
+			render plain: "OK"
 		else 
-			redirect_to placelists_path
+			render plain: "NOTOK"
 		end
 	end
 

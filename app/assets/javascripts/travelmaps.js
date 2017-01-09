@@ -55,8 +55,6 @@ var travelMaps = (function () {
           var coords = JSON.parse($(this).children('.hiddenCoords').text());
           addPlacetoMap(id, coords);
         });
-        console.log(addedPlaces);
-        console.log("cont counts: "+JSON.stringify(continentNum));
       } else {
         console.log("no places...");
       }
@@ -94,9 +92,9 @@ var travelMaps = (function () {
       });
     });
 
-    $(".deletePlace").click(addDeleteListener);
-
-    $(".place_visited").click(function(){
+    $("#list")
+    .on("click", ".deletePlace", addDeleteListener)
+    .on("click", ".place_visited", function(){
       console.log("clicked");
       var id = $(this).attr('id');
       console.log("id: "+id);
@@ -130,16 +128,13 @@ var travelMaps = (function () {
 
   var deletePlaceFromList = function(place) {
     $('.'+place.name).remove();
-    //var place = JSON.parse(place);
     var marker = addedPlaces[place.name].marker;
-    console.log(marker);
     marker.setMap(null);
     delete addedPlaces[place.name];
   }
 
   var addPlacetoList = function (place) {
     $("#list").append(renderPlaceDiv(place));
-    $("#list div:last .deletePlace").click(addDeleteListener);
     var coords = JSON.parse(place.coords);
     coords.lat = Number(coords.lat);
     coords.lng = Number(coords.lng);
@@ -148,7 +143,13 @@ var travelMaps = (function () {
   }
 
   var renderPlaceDiv = function (place) {
-    return '<div class="'+place.name+'"><span class="hiddenCoords">'+place.coords+'</span><span class="place_visited">'+place.visited+'</span> '+place.name+' <a href="'+window.location.href+'/places/'+place.id+'" class="deletePlace">Delete</a></div>';
+    return `<div class="${place.name}">
+    <span class="hiddenCoords">${place.coords}</span>
+    <a href="${window.location.href}/places/${place.id}" class="deletePlace">Delete</a>
+    <span class="place_visited" id="${place.id}">
+      <span class="label visitedStatus"><span>Unvisited</span>
+    </span> ${place.name}
+    </div>`;
   }
 
   var addDeleteListener = function(e) {

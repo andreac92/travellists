@@ -27,11 +27,11 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-6 col-md-offset-1" id="placelistList">
     <% @placelists.each do |placelist| %>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h2 class="panel-title"><%= link_to placelist.title, placelist_path(placelist) %> <%= link_to 'Delete', placelist_path(placelist), class: "label label-primary pull-right deleteList" %><span class="label label-primary pull-right">Edit</span></h2>
+          <h2 class="panel-title"><%= link_to placelist.title, placelist_path(placelist), class: "placeListTitle" %> <%= link_to 'Delete', placelist_path(placelist), class: "label label-primary pull-right deleteList" %><span class="label label-primary pull-right editPlaceList">Edit</span></h2>
         </div>
         <div class="panel-body">
           <%= placelist.description %>
