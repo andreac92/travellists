@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   get 'list/index'
 
   get 'welcome/index'
@@ -8,6 +10,7 @@ Rails.application.routes.draw do
   resources :placelists do
   	resources :places
   end
+  resources :users
 
   post '/places/:id/visit', to: 'places#toggle_visited'
 
