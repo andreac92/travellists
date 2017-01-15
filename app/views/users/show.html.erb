@@ -1,0 +1,21 @@
+<% content_for :pageTitle do %>
+<div class="page-header">
+  <h1 class="text-center">Account</h1>
+  <p class="text-center"><em>Welcome <%= @user.name %>!</em></p>
+</div>
+<% end %>
+
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-hover">
+			<tr>
+				<td>Name</td>
+				<td><%= @user.name %></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td><%= @user.email %></td>
+			</tr>
+		</table>
+	</div>
+</div>

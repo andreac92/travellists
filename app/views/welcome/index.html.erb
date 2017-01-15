@@ -1,2 +1,43 @@
-<h1>Welcome to my crib</h1>
-<%= link_to 'My Places', controller: 'places' %>
+<div class="jumbotron">
+  <h1>List your next adventure</h1>
+  <p>With Travellists, you can track your dream vacations and bucket list destinations as well as record your progress adventuring around the world.</p>
+  <p><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signUp">Sign up</button> <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#logIn">Log in</button></p>
+</div>
+
+<div class="modal fade" id="signUp" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Create an account</h4>
+      </div>
+      <div class="modal-body">
+      	<%= form_for @user do |f| %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+       
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.email_field :email, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
+
+        <div class="modal-footer">
+        	<%= f.submit "Sign up", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
