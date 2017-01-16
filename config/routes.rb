@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'users/new'
 
   get 'list/index'
@@ -14,6 +15,9 @@ Rails.application.routes.draw do
 
   post '/places/:id/visit', to: 'places#toggle_visited'
 
-
+  # get    '/login',   to: 'sessions#new' delete view
+  post   '/login',   to: 'sessions#create'
+  delete '/logout',  to: 'sessions#destroy'
+ 
   root 'welcome#index'
 end
