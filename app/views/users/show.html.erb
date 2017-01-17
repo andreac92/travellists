@@ -1,21 +1,47 @@
 <% content_for :pageTitle do %>
 <div class="page-header">
   <h1 class="text-center">Account</h1>
-  <p class="text-center"><em>Welcome <%= @user.name %>!</em></p>
+  <p class="text-center"><em>Welcome <%= current_user.name %>!</em></p>
 </div>
 <% end %>
 
 <div class="row">
-	<div class="col-md-12">
-		<table class="table table-hover">
-			<tr>
-				<td>Name</td>
-				<td><%= @user.name %></td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td><%= @user.email %></td>
-			</tr>
-		</table>
+	<div class="col-md-6 col-md-offset-3">
+      <%= form_for(current_user, html: { class: "form-horizontal" }) do |f| %>
+      <table class="table table-hover table-condensed">
+
+      	<div class="form-group">
+			<%= f.label :name, class: "col-sm-4 control-label" %>
+	     	<div class="col-sm-8">
+	     		<%= f.text_field :name, class: 'form-control' %>
+	     	</div>
+	     </div>
+
+	    <div class="form-group">
+			<%= f.label :email, class: "col-sm-4 control-label" %>
+			<div class="col-sm-8">
+	      		<%= f.email_field :email, class: 'form-control' %>
+	      	</div>
+        </div>
+
+        <div class="form-group">
+	      	<%= f.label :password, "New password", class: "col-sm-4 control-label" %>
+	      	<div class="col-sm-8">
+	      		<%= f.password_field :password, class: 'form-control' %>
+	      	</div>
+        </div>
+
+        <div class="form-group">
+	      	<%= f.label :password_confirmation, "Password confirmation", class: "col-sm-4 control-label" %>
+	      	<div class="col-sm-8">
+	      		<%= f.password_field :password_confirmation, class: 'form-control' %>
+	      	</div>
+        </div>
+
+      <div class="form-group">
+      	<%= f.submit "Save changes", class: "btn btn-primary center-block" %>
+     </div>
+    <% end %>
+
 	</div>
 </div>

@@ -1,0 +1,16 @@
+<% content_for :pageTitle do %>
+<div class="page-header">
+  <h1 class="text-center">All Users</h1>
+</div>
+<% end %>
+<div class="row">
+	<div class="col-md-12">
+		<ul>
+		  <% @users.each do |user| %>
+		    <li>
+		      <%= link_to user.name, user %>
+		    </li>
+		  <% end %>
+		</ul>
+	</div>
+</div>

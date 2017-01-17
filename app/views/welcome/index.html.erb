@@ -1,7 +1,9 @@
 <div class="jumbotron">
   <h1>List your next adventure</h1>
   <p>With Travellists, you can track your dream vacations and bucket list destinations as well as record your progress adventuring around the world.</p>
+  <% if !logged_in? %>
   <p><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#signUp">Sign up</button> <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#logIn">Log in</button></p>
+  <% end %>
 </div>
 
 <div class="modal fade" id="signUp" tabindex="-1" role="dialog">

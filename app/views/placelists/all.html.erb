@@ -1,0 +1,23 @@
+<% content_for :pageTitle do %>
+<div class="page-header">
+  <h1 class="text-center">All Placelists</h1>
+</div>
+<% end %>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Owner</th>
+			</tr>
+		  <% @placelists.each do |placelist| %>
+		    <tr>
+		      <td><%= placelist.id %></td>
+		      <td><%= placelist.title %></td>
+		      <td><%= placelist.user.name if placelist.user %></td>
+		    </tr>
+		  <% end %>
+		</table>
+	</div>
+</div>
