@@ -12,14 +12,6 @@ class PlacelistsController < ApplicationController
 		@placelists = Placelist.all
 	end
 
-	def show
-		@places = @placelist.places.all
-	end
-
-	def new
-		@placelist = Placelist.new
-	end
-
 	def create
 		@placelist = current_user.placelists.new(placelist_params)
 		if @placelist.save
@@ -29,8 +21,8 @@ class PlacelistsController < ApplicationController
 		end
 	end
 
-	def edit
-		@placelist = Placelist.find(params[:id])
+	def show
+		@places = @placelist.places.all
 	end
 
 	def update
@@ -43,7 +35,6 @@ class PlacelistsController < ApplicationController
 
 	def destroy
 		@placelist.destroy
-
 		render plain: "OK"
 	end
 

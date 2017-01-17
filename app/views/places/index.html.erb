@@ -4,13 +4,14 @@
   <tr>
     <th>Place</th>
     <th>Description</th>
+    <th>Visited?</th>
   </tr>
  
   <% @places.each do |place| %>
     <tr>
       <td><%= place.name %></td>
       <td><%= place.description %></td>
-      <td><%= link_to 'Show', place_path(place) %></td>
+      <td><%= place.visited %></td>
     </tr>
   <% end %>
 </table>

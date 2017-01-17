@@ -1,25 +1,45 @@
 Rails.application.routes.draw do
 
-  get 'users/new'
+# Placelist routes - index, create, show, update, destroy and all
+  resources :placelists, only: [:index, :create :show, :update, :destroy]
+  # get '/placelists', to: 'placelists#index'
 
-  get 'list/index'
+  # post '/placelists', to: 'placelists#create'
 
-  get 'welcome/index'
+  # get '/placelists/:id', to: 'placelists#show'
 
-  get '/placelists/all', to: 'placelists#all'
+  # patch '/placelists/:id', to: 'placelists#update'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources :places
-  resources :placelists
-  resources :users
+  # delete '/placelists/:id', to: 'placelists#destroy'
 
+# Place routes - index, create, destroy and toggle_visited
+
+  get '/places', to: 'places#index'
+
+  post '/placelists/:placelist_id/places', to: 'places#create'
+
+  delete '/placelists/:placelist_id/places/:id', to: 'places#destroy'
+
+  post '/placelists/:placelist_id/places/:id/visit', to: 'places#toggle_visited'
+  
+# User routes - index, create, update and show
   get '/account', to: 'users#show'
 
-  post '/places/:id/visit', to: 'places#toggle_visited'
+  get '/admin/users', to: 'users#index'
 
-  # get    '/login',   to: 'sessions#new' delete view
+  post '/users', to: 'users#create'
+
+  patch '/users/:id', to: 'users#update'
+
+# Session routes - create, destroy
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
- 
+
+# Admin routes - all users, all placelists
+  get '/admin/users', to: 'users#index'
+
+  get '/admin/placelists', to: 'placelists#all'
+
+# Root route 
   root 'welcome#index'
 end

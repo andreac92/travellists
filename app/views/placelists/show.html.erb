@@ -12,7 +12,7 @@
       <% @places.each do |place| %>
            <div class="<%= place.name %>">
               <span class="hiddenCoords"><%= place.coords =%></span>
-              <%= link_to 'Delete', placelist_place_path(@placelist, place), class: "deletePlace" %>
+              <%= link_to 'Delete', places_path(@placelist, place), class: "deletePlace" %>
               <span class="place_visited" id="<%= place.id %>"><%= visited_status(place.visited) %></span> 
               <%= place.name %>
             </div>
