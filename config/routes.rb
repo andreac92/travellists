@@ -1,35 +1,20 @@
 Rails.application.routes.draw do
 
 # Placelist routes - index, create, show, update, destroy and all
-  resources :placelists, only: [:index, :create :show, :update, :destroy]
-  # get '/placelists', to: 'placelists#index'
+# Place route - create
+  resources :placelists, only: [:create] do
+    resources :places, only: [:create]
+  end
+  resources :placelists, only: [ :index, :show, :update, :destroy ]
 
-  # post '/placelists', to: 'placelists#create'
+# Place routes - index, destroy and toggle_visited
+  resources :places, only: [:index, :destroy]
+  post '/places/:id/visit', to: 'places#toggle_visited'
 
-  # get '/placelists/:id', to: 'placelists#show'
-
-  # patch '/placelists/:id', to: 'placelists#update'
-
-  # delete '/placelists/:id', to: 'placelists#destroy'
-
-# Place routes - index, create, destroy and toggle_visited
-
-  get '/places', to: 'places#index'
-
-  post '/placelists/:placelist_id/places', to: 'places#create'
-
-  delete '/placelists/:placelist_id/places/:id', to: 'places#destroy'
-
-  post '/placelists/:placelist_id/places/:id/visit', to: 'places#toggle_visited'
-  
-# User routes - index, create, update and show
+ 
+# User routes -create, update and show
   get '/account', to: 'users#show'
-
-  get '/admin/users', to: 'users#index'
-
-  post '/users', to: 'users#create'
-
-  patch '/users/:id', to: 'users#update'
+  resources :users, only: [:create, :update]
 
 # Session routes - create, destroy
   post   '/login',   to: 'sessions#create'
@@ -37,7 +22,6 @@ Rails.application.routes.draw do
 
 # Admin routes - all users, all placelists
   get '/admin/users', to: 'users#index'
-
   get '/admin/placelists', to: 'placelists#all'
 
 # Root route 

@@ -51,24 +51,25 @@ var travelMaps = (function () {
       if (places.length){
         console.log("there are places!");
         places.each(function (){
-          var id = $(this).attr('class');
+          var id = $(this).attr('id');
+          var name = $(this).children('.name').text();
           var coords = JSON.parse($(this).children('.hiddenCoords').text());
-          addPlacetoMap(id, coords);
+          addPlacetoMap(id, name, coords);
         });
       } else {
         console.log("no places...");
       }
     }
 
-  var addPlacetoMap = function(id, coords) {
+  var addPlacetoMap = function(id, name, coords) {
     var mapcoords = {"lat":coords.lat, "lng":coords.lng};
     var marker = new google.maps.Marker({
       position: mapcoords,
       map: map,
-      title: id,
+      title: name,
       animation: google.maps.Animation.DROP
     });
-    addedPlaces[id] = {coords: coords, marker: marker};
+    addedPlaces[id] = {marker: marker};
     continentNum[continents[coords.short_name]] += 1;
   }
 
@@ -86,6 +87,7 @@ var travelMaps = (function () {
             console.log("it didnt work!!");
           } else {
             console.log("it worked!!!"+data);
+            form.trigger('reset');
             addPlacetoList(data);
           }
         }
@@ -127,8 +129,8 @@ var travelMaps = (function () {
   }
 
   var deletePlaceFromList = function(place) {
-    $('.'+place.name).remove();
-    var marker = addedPlaces[place.name].marker;
+    $('#'+place.id).remove();
+    var marker = addedPlaces[place.id].marker;
     marker.setMap(null);
     delete addedPlaces[place.name];
   }
@@ -139,16 +141,16 @@ var travelMaps = (function () {
     coords.lat = Number(coords.lat);
     coords.lng = Number(coords.lng);
     console.log(coords.lat);
-    addPlacetoMap(place.name, coords);
+    addPlacetoMap(place.id, place.name, coords);
   }
 
   var renderPlaceDiv = function (place) {
-    return `<div class="${place.name}">
+    return `<div id="${place.id}">
     <span class="hiddenCoords">${place.coords}</span>
-    <a href="${window.location.href}/places/${place.id}" class="deletePlace">Delete</a>
+    <a href="/places/${place.id}" class="deletePlace">Delete</a>
     <span class="place_visited" id="${place.id}">
       <span class="label visitedStatus"><span>Unvisited</span>
-    </span> ${place.name}
+    </span> <span class="name">${place.name}</span>
     </div>`;
   }
 

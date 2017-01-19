@@ -10,7 +10,7 @@ class PlacesController < ApplicationController
 	def create
 		@placelist = Placelist.find(params[:placelist_id])
     	@place = @placelist.places.new(place_params)
-    	if @place.save
+    	if current_user?(@placelist.user) && @place.save
     		render json: @place
     	else
 			render plain: "NOTOK"
@@ -18,7 +18,6 @@ class PlacesController < ApplicationController
 	end
 
 	def destroy
-		@place = Place.find(params[:id])
 		@rtn = {:id => @place.id, :name => @place.name}
 		@place.destroy
 
@@ -26,7 +25,6 @@ class PlacesController < ApplicationController
 	end
 
 	def toggle_visited
-		@place = Place.find(params[:id])
 		@place.visited = !@place.visited;
 		if @place.save
 			render plain: "OK"
@@ -42,7 +40,7 @@ class PlacesController < ApplicationController
 
 	    def correct_user
 	      @place = Place.find(params[:id])
-	      user = @placelist.user
+	      user = @place.placelist.user
 	      redirect_to(root_url) unless current_user?(user)
 	    end
 end
