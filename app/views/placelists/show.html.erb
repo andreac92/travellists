@@ -4,7 +4,7 @@
   <p class="text-center"><em><%= @placelist.description %></em></p>
   <% if @places.length
   visited = @places.select {|place| place.visited?} %>
-  <p>Stats: You have completed <strong><%= visited.length %></strong> of <strong><%=pluralize(@places.length, 'place') %></strong> of your travellist!</p>
+  <p class="text-center">Stats: You have completed <strong><%= visited.length %></strong> of <strong><%=pluralize(@places.length, 'place') %></strong> of your travellist!</p>
   <% end %>
 </div>
 <% end %>
