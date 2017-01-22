@@ -18,10 +18,9 @@ class PlacesController < ApplicationController
 	end
 
 	def destroy
-		@rtn = {:id => @place.id, :name => @place.name}
 		@place.destroy
 
-		render json: @rtn
+		render json: @place
 	end
 
 	def toggle_visited

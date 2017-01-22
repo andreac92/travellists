@@ -71,28 +71,25 @@ var travelMaps = (function () {
     });
     addedPlaces[id] = {marker: marker};
     continentNum[continents[coords.short_name]] += 1;
-    incrementTotalPlaces();
+    updatePlaceCount(1);
   }
 
-  var incrementTotalPlaces = function() {
-    var curr = $(".visitTotal").text().split(' ');
-    var num = (parseInt(curr[0])) +1;
+  var updatePlaceCount = function(num) {
+    var countEl = $(".visitTotal");
+    var curr = countEl.text().split(' ');
+    var num = (parseInt(curr[0])) + num;
     if (num == 1) {
-      $(".visitTotal").text("1 place");
+      countEl.text("1 place");
     } else {
-      $(".visitTotal").text(num+" places");
+      countEl.text(num+" places");
     }
   }
 
-  var decrementTotalPlaces = function() {
-    var curr = $(".visitTotal").text().split(' ');
-    var num = (parseInt(curr[0])) - 1;
-    if (num == 1) {
-      $(".visitTotal").text("1 place");
-    } else {
-      $(".visitTotal").text(num+" places");
-    }
-  }
+  var updateVisitCount = function(num) {
+    var countEl = $('.visitCount');
+    var count = parseInt(countEl.text());
+    countEl.text(count + num);
+  };
 
   var setListeners = function() {
     $("#submit > input").click(function(e) {
@@ -144,8 +141,10 @@ var travelMaps = (function () {
     statusTXT = status.children('span');
     if (statusTXT.text() == "Seen") {
       statusTXT.text("Unseen");
+      updateVisitCount(-1);
     } else {
       statusTXT.text("Seen");
+      updateVisitCount(1);
     }
   }
 
@@ -153,7 +152,10 @@ var travelMaps = (function () {
     $('#'+place.id).remove();
     var marker = addedPlaces[place.id].marker;
     marker.setMap(null);
-    decrementTotalPlaces();
+    updatePlaceCount(-1);
+    if (place.visited){
+      updateVisitCount(-1);
+    }
     delete addedPlaces[place.name];
   }
 
