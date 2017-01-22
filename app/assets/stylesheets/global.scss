@@ -59,7 +59,7 @@ a:hover {
 }
 }
 
-#placelist_form, .list-wrapper {
+#travelist_form, .list-wrapper {
 	padding: 10px;
 }
 
@@ -103,7 +103,7 @@ a:hover {
 .seen {
 	background-color: #5cb85c;
 }
-.editPlaceList {
+.editTravelist {
 	cursor: pointer;
 	&:hover {
 		background-color: #286090;
@@ -113,7 +113,7 @@ a:hover {
 	.deleteList {
 		display: none;
 	}
-	.placeListTitle {
+	.travelistTitle {
 	    color: #337ab7;
 	    background-color: #ffffff;
 	    padding: 5px 10px;

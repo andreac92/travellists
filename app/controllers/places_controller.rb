@@ -8,9 +8,9 @@ class PlacesController < ApplicationController
 	end
 
 	def create
-		@placelist = Placelist.find(params[:placelist_id])
-    	@place = @placelist.places.new(place_params)
-    	if current_user?(@placelist.user) && @place.save
+		@travelist = Travelist.find(params[:travelist_id])
+    	@place = @travelist.places.new(place_params)
+    	if current_user?(@travelist.user) && @place.save
     		render json: @place
     	else
 			render plain: "NOTOK"
@@ -40,7 +40,7 @@ class PlacesController < ApplicationController
 
 	    def correct_user
 	      @place = Place.find(params[:id])
-	      user = @place.placelist.user
+	      user = @place.travelist.user
 	      redirect_to(root_url) unless current_user?(user)
 	    end
 end

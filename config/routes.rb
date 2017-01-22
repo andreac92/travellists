@@ -2,10 +2,10 @@ Rails.application.routes.draw do
 
 # Placelist routes - index, create, show, update, destroy and all
 # Place route - create
-  resources :placelists, only: [:create] do
+  resources :travelists, only: [:create] do
     resources :places, only: [:create]
   end
-  resources :placelists, only: [ :index, :show, :update, :destroy ]
+  resources :travelists, only: [ :index, :show, :update, :destroy ]
 
 # Place routes - index, destroy and toggle_visited
   resources :places, only: [:index, :destroy]
@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-# Admin routes - all users, all placelists
+# Admin routes - all users, all travelists
   get '/admin/users', to: 'users#index'
-  get '/admin/placelists', to: 'placelists#all'
+  get '/admin/travelists', to: 'travelists#all'
 
 # Root route 
   root 'welcome#index'

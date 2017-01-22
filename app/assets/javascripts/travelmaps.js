@@ -71,6 +71,27 @@ var travelMaps = (function () {
     });
     addedPlaces[id] = {marker: marker};
     continentNum[continents[coords.short_name]] += 1;
+    incrementTotalPlaces();
+  }
+
+  var incrementTotalPlaces = function() {
+    var curr = $(".visitTotal").text().split(' ');
+    var num = (parseInt(curr[0])) +1;
+    if (num == 1) {
+      $(".visitTotal").text("1 place");
+    } else {
+      $(".visitTotal").text(num+" places");
+    }
+  }
+
+  var decrementTotalPlaces = function() {
+    var curr = $(".visitTotal").text().split(' ');
+    var num = (parseInt(curr[0])) - 1;
+    if (num == 1) {
+      $(".visitTotal").text("1 place");
+    } else {
+      $(".visitTotal").text(num+" places");
+    }
   }
 
   var setListeners = function() {
@@ -132,6 +153,7 @@ var travelMaps = (function () {
     $('#'+place.id).remove();
     var marker = addedPlaces[place.id].marker;
     marker.setMap(null);
+    decrementTotalPlaces();
     delete addedPlaces[place.name];
   }
 

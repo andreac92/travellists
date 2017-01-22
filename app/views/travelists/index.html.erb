@@ -1,0 +1,43 @@
+<% content_for :pageTitle do %>
+<div class="page-header">
+  <h1 class="text-center">My Travelists</h1>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="col-md-3">
+    <h3 class="text-center">Add a new Travelist</h3>
+    <div id="travelist_form">
+      <% puts @travelist.to_json %>
+      <%= form_for @travelist do |f| %>
+        <div class="form-group">
+          <%= f.label :title %>
+          <%= f.text_field :title, class: "form-control" %>
+        </div>
+       
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: "form-control" %>
+        </div>
+       
+        <div class="form-group">
+          <%= f.submit class: "btn btn-default center-block", id: "submitTravelist" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-md-offset-1" id="travelistList">
+    <% @travelists.each do |travelist| %>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2 class="panel-title"><%= link_to travelist.title, travelist_path(travelist), class: "travelistTitle" %> <%= link_to 'Delete', travelist_path(travelist), class: "label label-primary pull-right deleteList" %><span class="label label-primary pull-right editTravelist">Edit</span></h2>
+        </div>
+        <div class="panel-body">
+          <%= travelist.description %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+</div>
