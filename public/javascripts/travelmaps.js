@@ -18,8 +18,8 @@ var travelMaps = (function () {
   var initMap = function() {
       console.log("rendering...");
       map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 1,
-        center: {lat: 0, lng: 0},
+        zoom: 2,
+        center: {lat: 28, lng: 0},
         mapTypeControl: false,
         streetViewControl: false,
         panControl: false,
@@ -47,28 +47,34 @@ var travelMaps = (function () {
   }
 
   var getPlaces = function() {
-      var places = $("#list > div");
+      var places = $("#list .place-rows");
       if (places.length){
         console.log("there are places!");
         places.each(function (){
           var id = $(this).attr('id');
           var name = $(this).children('.name').text();
           var coords = JSON.parse($(this).children('.hiddenCoords').text());
-          addPlacetoMap(id, name, coords);
+          var seen = $(this).find('.seen').length ? true : false;
+          addPlacetoMap(id, name, coords, seen);
         });
       } else {
         console.log("no places...");
       }
     }
 
-  var addPlacetoMap = function(id, name, coords) {
+  var addPlacetoMap = function(id, name, coords, seen) {
     var mapcoords = {"lat":coords.lat, "lng":coords.lng};
-    var marker = new google.maps.Marker({
+    var ops = {
       position: mapcoords,
       map: map,
       title: name,
       animation: google.maps.Animation.DROP
-    });
+    };
+    if (seen) {
+      console.log("yes");
+      ops.icon = '/images/markerSeen.png';
+    }
+    var marker = new google.maps.Marker(ops);
     addedPlaces[id] = {marker: marker};
     continentNum[continents[coords.short_name]] += 1;
     updatePlaceCount(1);
@@ -116,7 +122,7 @@ var travelMaps = (function () {
     .on("click", ".deletePlace", addDeleteListener)
     .on("click", ".place_visited", function(){
       console.log("clicked");
-      var id = $(this).attr('id');
+      var id = $(this).closest('.place-rows').attr('id');
       console.log("id: "+id);
       var el = $(this);
       $.ajax({
@@ -129,7 +135,12 @@ var travelMaps = (function () {
           } else {
             console.log("it worked!!!"+data);
             toggleSeen(el.children('.visitedStatus'));
-            
+            var marker = addedPlaces[id].marker;
+            if (marker.getIcon()) {
+              marker.setIcon();
+            } else {
+              marker.setIcon('/images/markerSeen.png');
+            }
           }
         }
       });
@@ -139,11 +150,11 @@ var travelMaps = (function () {
   var toggleSeen = function(status) {
     status.toggleClass("seen");
     statusTXT = status.children('span');
-    if (statusTXT.text() == "Seen") {
-      statusTXT.text("Unseen");
+    if (statusTXT.text() == "Visited") {
+      statusTXT.text("Unvisited");
       updateVisitCount(-1);
     } else {
-      statusTXT.text("Seen");
+      statusTXT.text("Visited");
       updateVisitCount(1);
     }
   }
@@ -160,22 +171,23 @@ var travelMaps = (function () {
   }
 
   var addPlacetoList = function (place) {
-    $("#list").append(renderPlaceDiv(place));
+    $("#list").append(renderPlaceTr(place));
     var coords = JSON.parse(place.coords);
     coords.lat = Number(coords.lat);
     coords.lng = Number(coords.lng);
     console.log(coords.lat);
-    addPlacetoMap(place.id, place.name, coords);
+    addPlacetoMap(place.id, place.name, coords, false);
   }
 
-  var renderPlaceDiv = function (place) {
-    return `<div id="${place.id}">
-    <span class="hiddenCoords">${place.coords}</span>
-    <a href="/places/${place.id}" class="deletePlace">Delete</a>
-    <span class="place_visited" id="${place.id}">
+  var renderPlaceTr = function (place) {
+    return `<tr id="${place.id}">
+    <td class="name">${place.name}</td>
+    <td class="place_visited" id="${place.id}">
       <span class="label visitedStatus"><span>Unvisited</span>
-    </span> <span class="name">${place.name}</span>
-    </div>`;
+    </td> 
+    <td><a href="/places/${place.id}" class="deletePlace">Delete</a></td>
+    <td class="hiddenCoords">${place.coords}</td>
+    </tr>`;
   }
 
   var addDeleteListener = function(e) {

@@ -17,32 +17,37 @@
 <div class="row">
 <div class="col-md-4">
   <div class="list-wrapper">
-    <div id="list">
+    <table id="list" class="table">
+      <tr>
+        <th>Place</th>
+        <th>Status</th>
+        <th>Remove</th>
       <% @places.each do |place| %>
-           <div id="<%= place.id %>">
-              <span class="hiddenCoords"><%= place.coords =%></span>
-              <%= link_to 'Delete', place_path(place), class: "deletePlace" %>
-              <span class="place_visited" id="<%= place.id %>"><%= visited_status(place.visited) %></span> 
-              <span class="name"><%= place.name %></span>
-            </div>
+           <tr id="<%= place.id %>" class="place-rows">
+              <td class="name"><%= place.name %></td>
+              <td class="place_visited"><%= visited_status(place.visited) %></td> 
+              <td><%= link_to 'Delete', place_path(place), class: "deletePlace" %></td>
+              <td class="hiddenCoords"><%= place.coords =%></td>
+            </tr>
       <% end %>
-    </div>
+    </table>
 
-    <h3 class="text-center">Add a place</h3>
-    <%= form_for([@travelist, @travelist.places.build]) do |f| %>
-      <div class="form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: "autocomplete form-control" %>
+    <div class="panel panel-default">
+      <div class="panel-heading text-center add-place" data-toggle="collapse" href="#collapseAdd" aria-expanded="false" aria-controls="collapseAdd">Add a place
       </div>
-      <div class="form-group">
-        <%= f.label :description %><br>
-        <%= f.text_area :description, class: "form-control" %>
+      <div class="collapse panel-body" id="collapseAdd">
+        <%= form_for([@travelist, @travelist.places.build]) do |f| %>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, class: "autocomplete form-control" %>
+          </div>
+          <%= f.text_area :coords %>
+          <div id="submit" class="form-group">
+            <%= f.submit class: "btn btn-default center-block" %>
+          </div>
+        <% end %>
       </div>
-      <%= f.text_area :coords %>
-      <div id="submit" class="form-group">
-        <%= f.submit class: "btn btn-default center-block" %>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>
   <div class="col-md-8">
