@@ -42,7 +42,7 @@ $(window).load(function(){
     			var title = $(this).siblings('.travelistTitle');
     			var body = panel.children('.panel-body');
 
-    			var id = (title.attr('href')).split('/').splice(-1);
+    			var id = (title.attr('href')).split('/').pop();
     			if (newText == "Edit") {
     				console.log("sending edits");
     				title.attr("contenteditable", "false");
@@ -68,6 +68,14 @@ $(window).load(function(){
     		})
     		.on("click", ".editable a.travelistTitle", function(e){
     			e.preventDefault();
+    		})
+    		.on("click", ".cancelEdits", function() {
+    			console.log("canceled!");
+    			var panel = $(this).closest('div.panel');
+    			panel.toggleClass('editable');
+    			$(this).siblings('.travelistTitle').attr("contenteditable", "false");
+    			panel.children('.panel-body').attr("contenteditable", "false");
+    			$('.editTravelist').text("Edit");
     		});
 		}
 

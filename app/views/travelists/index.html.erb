@@ -33,9 +33,9 @@
 
   <div class="col-md-6 col-md-offset-1" id="travelistList">
     <% @travelists.each do |travelist| %>
-      <div class="panel panel-primary">
+      <div class="panel">
         <div class="panel-heading">
-          <h2 class="panel-title"><%= link_to travelist.title, travelist_path(travelist), class: "travelistTitle" %> <%= link_to 'Delete', travelist_path(travelist), class: "label label-primary pull-right deleteList" %><span class="label label-primary pull-right editTravelist">Edit</span></h2>
+          <h2 class="panel-title"><%= link_to travelist.title, travelist_path(travelist), class: "travelistTitle" %> <%= link_to 'Delete', travelist_path(travelist), class: "label pull-right deleteList" %><span class="label pull-right cancelEdits">Cancel</span><span class="label pull-right editTravelist">Edit</span></h2>
         </div>
         <div class="panel-body">
           <%= travelist.description %>

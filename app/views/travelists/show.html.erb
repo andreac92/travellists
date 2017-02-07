@@ -17,7 +17,7 @@
 <div class="row">
 <div class="col-md-4">
   <div class="list-wrapper">
-    <table id="list" class="table">
+    <table id="list" class="table table-hover">
       <tr>
         <th>Place</th>
         <th>Status</th>
@@ -28,6 +28,7 @@
               <td class="place_visited"><%= visited_status(place.visited) %></td> 
               <td><%= link_to 'Delete', place_path(place), class: "deletePlace" %></td>
               <td class="hiddenCoords"><%= place.coords =%></td>
+              <td class="desc"><%= place.description %></td>
             </tr>
       <% end %>
     </table>
@@ -40,6 +41,10 @@
           <div class="form-group">
             <%= f.label :name %>
             <%= f.text_field :name, class: "autocomplete form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :description %>
+            <%= f.text_area :description, class: "form-control" %>
           </div>
           <%= f.text_area :coords %>
           <div id="submit" class="form-group">

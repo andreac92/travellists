@@ -10,6 +10,8 @@ var travelMaps = (function () {
     "Europe": 0,
     "Australia": 0
   };
+  var avgLat = 0;
+  var avgLong = 0;
 
   var continentCount = function(shortName){
     continentNum[shortName] += 1;
@@ -28,7 +30,7 @@ var travelMaps = (function () {
      getPlaces();
      setListeners();
      autocomplete = new google.maps.places.Autocomplete(
-      (document.getElementById('place_name')), { types: ['geocode']} );
+      (document.getElementById('place_name')), { types: []} );
      autocomplete.addListener('place_changed', onPlaceChanged);
    }
 
@@ -53,16 +55,17 @@ var travelMaps = (function () {
         places.each(function (){
           var id = $(this).attr('id');
           var name = $(this).children('.name').text();
+          var desc = $(this).children('.desc').text();
           var coords = JSON.parse($(this).children('.hiddenCoords').text());
           var seen = $(this).find('.seen').length ? true : false;
-          addPlacetoMap(id, name, coords, seen);
+          addPlacetoMap(id, name, coords, seen, desc);
         });
       } else {
         console.log("no places...");
       }
     }
 
-  var addPlacetoMap = function(id, name, coords, seen) {
+  var addPlacetoMap = function(id, name, coords, seen, desc) {
     var mapcoords = {"lat":coords.lat, "lng":coords.lng};
     var ops = {
       position: mapcoords,
@@ -74,8 +77,20 @@ var travelMaps = (function () {
       console.log("yes");
       ops.icon = '/images/markerSeen.png';
     }
+
+    var content = `<h4>${name}</h4><p>${desc}</p>`;
     var marker = new google.maps.Marker(ops);
+    var infowindow = new google.maps.InfoWindow({
+          content: content
+        });
+    marker.addListener('mouseover', function() {
+          infowindow.open(map, marker);
+        });
+      marker.addListener('mouseout', function() {
+        infowindow.close(map, marker);
+      });
     addedPlaces[id] = {marker: marker};
+   
     continentNum[continents[coords.short_name]] += 1;
     updatePlaceCount(1);
   }
@@ -144,7 +159,19 @@ var travelMaps = (function () {
           }
         }
       });
-    });
+    })
+    .on("mouseenter", ".place-rows", bounceMarker);
+  }
+
+  var bounceMarker = function() {
+    var id = $(this).attr('id');
+    var marker = addedPlaces[id].marker;
+    if (marker.getAnimation() == null) {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function() {
+          marker.setAnimation(null);
+        }, 700);
+    }
   }
 
   var toggleSeen = function(status) {
@@ -176,17 +203,18 @@ var travelMaps = (function () {
     coords.lat = Number(coords.lat);
     coords.lng = Number(coords.lng);
     console.log(coords.lat);
-    addPlacetoMap(place.id, place.name, coords, false);
+    addPlacetoMap(place.id, place.name, coords, false, place.description);
   }
 
   var renderPlaceTr = function (place) {
-    return `<tr id="${place.id}">
+    return `<tr id="${place.id}" class="place-rows">
     <td class="name">${place.name}</td>
     <td class="place_visited" id="${place.id}">
       <span class="label visitedStatus"><span>Unvisited</span>
     </td> 
     <td><a href="/places/${place.id}" class="deletePlace">Delete</a></td>
     <td class="hiddenCoords">${place.coords}</td>
+    <td class="desc"><%= ${place.description} %></td>
     </tr>`;
   }
 
@@ -224,22 +252,32 @@ var travelMapsStyle = [
     ]
   },
   {
-    "featureType": "landscape",
+    "featureType": "administrative.country",
+    "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#ff7b9e"
+        "color": "#dbd477"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#3f3f3f"
       },
       {
-        "visibility": "simplified"
+        "visibility": "on"
       }
     ]
   },
   {
     "featureType": "landscape",
-    "elementType": "labels.text",
+    "elementType": "geometry.fill",
     "stylers": [
       {
-        "color": "#000000"
+        "color": "#efd57f"
       }
     ]
   },
