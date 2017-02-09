@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="col-md-6 col-md-offset-1" id="travelistList">
+  <div class="col-md-6" id="travelistList">
     <% @travelists.each do |travelist| %>
       <div class="panel">
         <div class="panel-heading">
@@ -42,6 +42,12 @@
         </div>
       </div>
     <% end %>
+  </div>
+
+  <div class="col-md-3">
+    <h3>Your progress</h3>
+    <p>You have visited <strong><%= @num_visited %></strong> places of <strong><%= @all %></strong> total places (<strong><%= (@num_visited*100/@all).round %>%</strong>) in all your travelists.</p>
+    <p>You have been to x different countries on z different continents.</p>
   </div>
 
 </div>

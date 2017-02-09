@@ -5,6 +5,14 @@ class TravelistsController < ApplicationController
 	
 	def index
 		@travelists = current_user.travelists
+		all_places = current_user.places
+		@all = all_places.length
+		visited_places = all_places.select do |place|
+			place.visited
+		end
+		@num_visited = visited_places.length
+		# TODO find unique number of places & countries
+		# TODO find number of continents visited from countries
 		@travelist = Travelist.new
 	end
 
@@ -47,5 +55,13 @@ class TravelistsController < ApplicationController
 	      @travelist = Travelist.find(params[:id])
 	      user = @travelist.user
 	      redirect_to(root_url) unless current_user?(user)
+	    end
+
+	    def get_all_visited(lists)
+	    	count = 0
+	    	lists.each do |list|
+	    		count += list.places.length
+	    	end
+	    	count
 	    end
 end
