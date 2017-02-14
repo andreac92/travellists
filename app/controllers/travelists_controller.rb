@@ -7,12 +7,20 @@ class TravelistsController < ApplicationController
 		@travelists = current_user.travelists
 		all_places = current_user.places
 		@all = all_places.length
-		visited_places = all_places.select do |place|
-			place.visited
+
+		@num_visited = 0
+		countries = Set.new
+		continents = Set.new
+		all_places.each do |place|
+			if place.visited
+				@num_visited+=1
+				coords = JSON.parse(place.coords)
+				countries.add(coords['short_name'])
+				continents.add(get_continent(coords['short_name'])) 
+			end
 		end
-		@num_visited = visited_places.length
-		# TODO find unique number of places & countries
-		# TODO find number of continents visited from countries
+		@countries_visited = countries.length
+		@continents_visited = continents.length
 		@travelist = Travelist.new
 	end
 

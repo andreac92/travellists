@@ -42,12 +42,13 @@
         </div>
       </div>
     <% end %>
+    <%= "You haven't added any lists yet!" if @travelists.empty? %>
   </div>
 
   <div class="col-md-3">
     <h3>Your progress</h3>
-    <p>You have visited <strong><%= @num_visited %></strong> places of <strong><%= @all %></strong> total places (<strong><%= (@num_visited*100/@all).round %>%</strong>) in all your travelists.</p>
-    <p>You have been to x different countries on z different continents.</p>
+    <p>You have visited <strong><%= @num_visited %></strong> places of <strong><%= @all %></strong> total places (<strong><%= @all != 0 ? (@num_visited*100/@all).round : 0 %>%</strong>) in all your travelists.</p>
+    <p>You have been to <strong><%= @countries_visited %></strong> different countries on <strong><%= @continents_visited %></strong> different continents.</p>
   </div>
 
 </div>

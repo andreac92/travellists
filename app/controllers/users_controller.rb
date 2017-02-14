@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   	@user = User.new(user_params)
   	if @user.save
   		log_in @user
-		  redirect_to account_path
+		  redirect_to travelists_path
 	   end
   end
 

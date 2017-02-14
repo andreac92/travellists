@@ -1,3 +1,4 @@
+/* TravelMaps namespace */
 var travelMaps = (function () {
   var addedPlaces = {};
   var map = null;
