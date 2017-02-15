@@ -51,7 +51,7 @@ class TravelistsController < ApplicationController
 
 	def destroy
 		@travelist.destroy
-		render plain: "OK"
+		redirect_to travelists_path
 	end
 
 	private
