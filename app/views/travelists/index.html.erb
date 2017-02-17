@@ -48,8 +48,8 @@
 
   <div class="col-md-3">
     <h3>Your progress</h3>
-    <p>You have visited <strong><%= @num_visited %></strong> places of <strong><%= @all %></strong> total places (<strong><%= @all != 0 ? (@num_visited*100/@all).round : 0 %>%</strong>) in all your travelists.</p>
-    <p>You have been to <strong><%= @countries_visited %></strong> different countries on <strong><%= @continents_visited %></strong> different continents.</p>
+    <p>You have visited <strong><%= pluralize(@num_visited, 'place') %></strong> of <strong><%= pluralize(@all, 'total place', 'total places') %></strong> (<strong><%= @all != 0 ? (@num_visited*100/@all).round : 0 %>%</strong>) in all your travelists.</p>
+    <p>You have been to <strong><%= pluralize(@countries_visited, 'different country', 'different countries') %></strong> and <strong><%= pluralize(@continents_visited, 'continent') %></strong>.</p>
   </div>
 
 </div>
