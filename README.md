@@ -1,6 +1,6 @@
 # README
 
-A web app that lets you track and map places on your so-called "bucket list".
+A web app that lets you track and map places you have seen and one day want to see.
 
 ## Features
 * Account creation/log in/log out
