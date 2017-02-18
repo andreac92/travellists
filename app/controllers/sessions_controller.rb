@@ -5,7 +5,9 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to travelists_path
     else
-      redirect_to root_path
+      @login_errors = "Invalid credentials"
+      @user = User.new
+      render 'welcome/index'
     end
   end
 

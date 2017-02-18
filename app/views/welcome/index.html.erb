@@ -14,6 +14,9 @@
         <h4 class="modal-title">Create an account</h4>
       </div>
       <div class="modal-body">
+        <% if @sign_up_errors != nil %>
+          <div class="alert alert-danger" role="alert"><%= @sign_up_errors.join('. ') %></div>
+        <% end %>
       	<%= form_for @user do |f| %>
         <div class="form-group">
           <%= f.label :name %>
@@ -52,6 +55,9 @@
         <h4 class="modal-title">Log In</h4>
       </div>
       <div class="modal-body">
+        <% if @login_errors != nil %>
+          <div class="alert alert-danger" role="alert"><%= @login_errors %></div>
+        <% end %>
       	<%= form_for(:session, url: login_path) do |f| %>
         <div class="form-group">
           <%= f.label :email %>
@@ -71,3 +77,18 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<% if @login_errors != nil %>
+  <% content_for :extra do %>
+      <script>
+        $('#logIn').modal()
+      </script>
+  <% end %>
+<% end %>
+<% if @sign_up_errors != nil %>
+  <% content_for :extra do %>
+      <script>
+        $('#signUp').modal()
+      </script>
+  <% end %>
+<% end %>

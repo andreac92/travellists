@@ -8,11 +8,15 @@ class UsersController < ApplicationController
   end
 
   def create
-  	@user = User.new(user_params)
-  	if @user.save
-  		log_in @user
+  	user = User.new(user_params)
+  	if user.save
+  		log_in user
 		  redirect_to travelists_path
-	   end
+	 else
+      @sign_up_errors = user.errors.full_messages
+      @user = User.new
+      render 'welcome/index'
+   end
   end
 
   def show
